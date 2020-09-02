@@ -1,0 +1,30 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "rulesDirectory": ["tslint-plugin-prettier"],
+    "rules": {
+        "quotemark": [
+            true,
+            "single"
+        ],
+        "no-empty": false,
+        "object-literal-sort-keys": false,
+        "ordered-imports": false,
+        "adjacent-overload-signatures": true,
+        "member-access": true,
+        "no-any": true,
+        "no-var-requires": true,
+        "no-shadowed-variable": true,
+        "no-var-keyword": true,
+        "triple-equals": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true,
+        "no-consecutive-blank-lines": false,
+        "no-console": true,
+        "no-return-await": true
+    },
+    "linterOptions": {
+        "exclude": ["src/models/entities/*.ts", "src/migrations/*.ts"]
+    }
+}

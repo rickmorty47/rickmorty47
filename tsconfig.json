@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "outDir": "./build",
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "paths": {
+      "@services": ["src/services/index"],
+      "@middlewares": ["src/services/middlewares/index"],
+      "@queryBuilders": ["src/services/queryBuilders/index"],
+      "@models": ["src/models/index"],
+      "@enums": ["src/models/enums/index"],
+      "@interfaces": ["src/models/interfaces/index"],
+      "@controllers": ["src/controllers/index"],
+      "@exceptions": ["src/models/exceptions/index"]
+    }
+  }
+}
