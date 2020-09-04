@@ -35,8 +35,20 @@ const pointTypesConfig = {
     color: 'brown',
     name: 'Транспорт',
     label: 'T'
+  },
+  [EMapPointType.USER]: {
+    color: 'white',
+    name: 'Пользователь',
+    label: 'U'
   }
 }
+
+const LEGEND = '\n\n' +
+  'U - ваше местоположение\n' +
+  'М - медпомощь\n' +
+  'Т - транспорт\n' +
+  'У - укрытие\n' +
+  'P - милиция\n';
 
 @Service
 export class PointService {
@@ -92,26 +104,36 @@ export class PointService {
       }
 
       points = filteredPoints;
+      if(points.length > 0) {
+        const targetPoint = pointsFilteredByType[0];
+        const reverseGeocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?language=be&latlng=${targetPoint.latitude},${targetPoint.longitude}&key=${config.googleApiKey}`;
+        const response = await axios.get(reverseGeocodingUrl);
+        if (response?.data?.results.length > 0 && response.data.results[0].formatted_address !== undefined) {
+          // TODO: formatted_address has extra fields which we don't need: country, zip-code
+          text += '\n' + 'Адрес: ' + response.data.results[0].formatted_address;
+        }
+      }
     } else {
       const searchPointsDistanceKm = searchPointsDistance / 1000;
       text = `Не найдено ${pointTypesConfig[type].name} в радиусе ${searchPointsDistanceKm} км`;
     }
 
-    const legend = '\n\n' +
-      'М - медпомощь\n' +
-      'Т - транспорт\n' +
-      'У - укрытие\n' +
-      'P - милиция';
+    text += LEGEND;
 
-    text += legend;
+    // add a marker with user location
+    points.push({
+      type: EMapPointType.USER,
+      latitude: user.latitude,
+      longitude: user.longitude
+    });
 
-    // TODO: maybe we should also render user location?
     const markers = points.map(
       point => {
         const pointTypeConfig = pointTypesConfig[point.type];
         return `color:${pointTypeConfig.color}%7Clabel:${pointTypeConfig.label}%7C${point.latitude},${point.longitude}`;
       }
     ).join('&markers=');
+
     const url = `https://maps.googleapis.com/maps/api/staticmap?size=600x400&markers=${markers}&key=${config.googleApiKey}&path=${path}`;
 
     const map = await axios.get(url, {
