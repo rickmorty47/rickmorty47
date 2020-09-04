@@ -34,7 +34,7 @@ https://pm2.keymetrics.io/docs/usage/quick-start/.
 ### Configuration options
 
 - `TELEGRAM_BOT_TOKEN`: https://core.telegram.org/bots
-- `GOOGLE_API_KEY`: https://developers.google.com/maps/documentation/javascript/get-api-key. **Please note: token need the following permissions:**
+- `GOOGLE_API_KEY`: https://developers.google.com/maps/documentation/javascript/get-api-key. **Please note: token needs the following permissions:**
   - [Places API](https://developers.google.com/maps/documentation/javascript/places-autocomplete#get-started)
   - [Geocoding API](https://developers.google.com/maps/documentation/javascript/geocoding#GetStarted)
 - `TELEGRAM_ADMIN_LOGIN` (optional): nickname of bot admin (without `@`). Support / cooperation messages will be sent to the specified user. 
